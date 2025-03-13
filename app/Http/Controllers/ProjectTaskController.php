@@ -23,6 +23,7 @@ class ProjectTaskController extends Controller
             "workgroupid"=> $request->workgroupid,
             "startTimeDate"=> $request->startTimeDate,
             "endTimeDate"=> $request->endTimeDate,
+            "project_date"=> $request->project_date,
             "description"=> $request->description,
         ]);
 
@@ -50,6 +51,8 @@ class ProjectTaskController extends Controller
             "workgroupid"=> $request->workgroupid,
             "startTimeDate"=> $request->startTimeDate,
             "endTimeDate"=> $request->endTimeDate,
+            "project_date"=> $request->project_date,
+            "billable"=> $request->project_date,
             "description"=> $request->description,
         ]);
 
