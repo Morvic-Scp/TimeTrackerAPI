@@ -13,7 +13,7 @@ class ProjectTaskController extends Controller
             "created_by"=>'required|exists:users,id',
             "workgroupid"=>'required|exists:workgroups,id',
             "startTimeDate"=>'required',
-            "endTimeDate"=>'required',
+            // "endTimeDate"=>'required',
             "description"=>'required',
         ]);
 
@@ -22,7 +22,7 @@ class ProjectTaskController extends Controller
             "created_by"=> $request->created_by,
             "workgroupid"=> $request->workgroupid,
             "startTimeDate"=> $request->startTimeDate,
-            "endTimeDate"=> $request->endTimeDate,
+            // "endTimeDate"=> $request->endTimeDate,
             "project_date"=> $request->project_date,
             "billable"=> $request->billable,
             "description"=> $request->description,
@@ -50,7 +50,7 @@ class ProjectTaskController extends Controller
           "projectid"=> $request->projectid,
             "created_by"=> $request->created_by,
             "workgroupid"=> $request->workgroupid,
-            "startTimeDate"=> $request->startTimeDate,
+            // "startTimeDate"=> $request->startTimeDate,
             "endTimeDate"=> $request->endTimeDate,
             "project_date"=> $request->project_date,
             "billable"=> $request->billable,

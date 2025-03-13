@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('created_by')->references('id')->on('users');
             $table->foreignId('workgroupid')->references('id')->on('workgroups')->nullable();
             $table->timestamp('startTimeDate');
-            $table->timestamp('endTimeDate');
+            $table->timestamp('endTimeDate')->nullable();
             $table->timestamp('project_date')->nullable();
             $table->boolean('billable')->default(false);
             $table->string('description');
