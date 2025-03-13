@@ -24,6 +24,7 @@ class ProjectTaskController extends Controller
             "startTimeDate"=> $request->startTimeDate,
             "endTimeDate"=> $request->endTimeDate,
             "project_date"=> $request->project_date,
+            "billable"=> $request->billable,
             "description"=> $request->description,
         ]);
 
@@ -45,14 +46,14 @@ class ProjectTaskController extends Controller
 
         $this->authorize('update',  $task);
 
-        $createProject =  $task->update([
+        $updateProject =  $task->update([
           "projectid"=> $request->projectid,
             "created_by"=> $request->created_by,
             "workgroupid"=> $request->workgroupid,
             "startTimeDate"=> $request->startTimeDate,
             "endTimeDate"=> $request->endTimeDate,
             "project_date"=> $request->project_date,
-            "billable"=> $request->project_date,
+            "billable"=> $request->billable,
             "description"=> $request->description,
         ]);
 
