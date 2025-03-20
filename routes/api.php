@@ -10,19 +10,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-Route::post('/logout',[AuthController::class, 'logout']);
 Route::post('/register',[AuthController::class, 'signUp']);
 Route::post('/token',[AuthController::class, 'login']);
 Route::post('/refresh-token', [AuthController::class, 'refreshToken']);
 Route::get('/auth-user', [AuthController::class, 'user']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout',[AuthController::class, 'logout']);
     Route::get('/user-list', [AuthController::class, 'allUsers']);
 
     Route::get('/user-projects', [ProjectController::class, 'getProjects']);
     Route::post('/create-projects', [ProjectController::class, 'createProject']);
     Route::put('/update-projects/{project}', [ProjectController::class, 'updateProject']);
     Route::delete('/delete-projects', [ProjectController::class, 'destroy']);
+    Route::get('/project', [ProjectController::class, 'getUserProjects']);
 
 
     Route::post('/create-task', [ProjectTaskController::class, 'createProjectTask']);

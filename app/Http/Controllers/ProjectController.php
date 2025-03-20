@@ -21,23 +21,76 @@ class ProjectController extends Controller
         $userId = $request->query('userid');
         if ($userId) {
             $projects = Project::
-            // where('created_by', $userId)
-            orWhereHas('projects', function ($query) use ($userId) {
+            where('created_by', $userId)
+            ->orWhereHas('projects', function ($query) use ($userId) {
                 $query->whereHas('userWorkgroups', function ($query) use ($userId) {
                     $query->where('userid', $userId);
                 });
             })
-            // ->orWhereHas('directProjects', function ($query) use ($userId) {
-            //     $query->where('userid', $userId);
-            // })
-            ->with('tasks')
-            ->get();
+            ->orWhereHas('directProjects', function ($query) use ($userId) {
+                $query->where('userid', $userId);
+            })
+            ->with(['tasks','creator:id,name'])
+            ->get()->map(function ($project) {
+                $project->created_person_name = $project->creator->name ?? null;
+                unset($project->creator);
+                return $project;
+            });
 
             return response()->json($projects);
         }else{
-            $projects = project::all();
+            $projects = project::where('creator:id,name')->get()->map(function ($project) {
+                $project->created_person_name = $project->creator->name ?? null;
+                unset($project->creator);
+                return $project;
+            });
             return $projects;
         }
+    }
+
+    public function getUserProjects(Request $request){
+        $projectid = $request->query('projectid');
+
+        if(!$projectid){
+            return response()->json([
+                 'message' => 'projectid is Required.'
+            ],404);
+        }
+
+        $userProjects = project::with([
+        'projects.users:id,name,email'
+        ])
+        ->where('id', $projectid)
+        ->first();
+
+        if (!$userProjects) {
+            return response()->json(['message' => 'No project found'], 404);
+        }
+
+        // return response()->json([
+        //     $userProjects
+        // ],201);
+
+        // Flatten the users list
+        $assignedUsers = $userProjects->projects->flatMap->users->map(function ($user) {
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email
+            ];
+        });
+
+        return response()->json([
+            'id' => $userProjects->id,
+            'name' => $userProjects->name,
+            'duration' => $userProjects->duration,
+            'status' => $userProjects->status,
+            'color' => $userProjects->color,
+            'created_person_name' => $userProjects->created_person_name,
+            'created_by' => $userProjects->created_by,
+            'assigned_users' => $assignedUsers
+        ]);
+
     }
 
     public function createProject(Request $request){

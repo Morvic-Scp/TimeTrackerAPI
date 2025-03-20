@@ -11,7 +11,7 @@ class ProjectTaskController extends Controller
         $request->validate([
             "projectid"=>'required|exists:projects,id',
             "created_by"=>'required|exists:users,id',
-            "workgroupid"=>'required|exists:workgroups,id',
+            "workgroupid"=>'exists:workgroups,id',
             "startTimeDate"=>'required',
             // "endTimeDate"=>'required',
             "description"=>'required',
@@ -38,7 +38,7 @@ class ProjectTaskController extends Controller
         $request->validate([
           "projectid"=>'required|exists:projects,id',
             "created_by"=>'required|exists:users,id',
-            "workgroupid"=>'required|exists:workgroups,id',
+            "workgroupid"=>'exists:workgroups,id',
             "startTimeDate"=>'required',
             "endTimeDate"=>'required',
             "description"=>'required',

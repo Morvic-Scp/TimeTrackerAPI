@@ -23,4 +23,9 @@ class workgroups extends Model
     {
         return $this->hasMany(user_workgroup::class, 'workgroupid');
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_workgroups', 'workgroupid', 'userid');
+    }
 }
