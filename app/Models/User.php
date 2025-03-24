@@ -54,9 +54,9 @@ class User extends Authenticatable
         return $this->belongsToMany(roles::class, 'user_roles','userid','roleid');
     }
 
-    public function tokens()
-    {
-        return $this->hasMany(\Laravel\Sanctum\PersonalAccessToken::class, 'tokenable_id');
-    }
+    // public function tokens()
+    // {
+    //     return $this->hasMany(\Laravel\Sanctum\PersonalAccessToken::class, 'tokenable_id');
+    // }
 
 }
